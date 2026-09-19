@@ -7,14 +7,16 @@ from app.kubernetes import (
     DeploymentInspector,
     NetworkInspector,
 )
+from app.ai import AIAgent
+from app.models.diagnosis import Diagnosis
 
 
 class InvestigationService:
-    """Orchestrates Kubernetes evidence gathering (Pods, Logs, Events, Deployments, Network)."""
+    """Orchestrates Kubernetes evidence gathering and AI reasoning diagnosis."""
 
     @classmethod
     def investigate(cls) -> Dict[str, Any]:
-        """Run full cluster investigation and return structured evidence."""
+        """Run full cluster investigation and AI reasoning analysis."""
         logger.info("Starting cluster investigation orchestrator...")
 
         # 1. Check Pods
@@ -41,5 +43,11 @@ class InvestigationService:
             "network": network_evidence,
         }
 
-        logger.info("Cluster investigation completed successfully.")
-        return investigation_result
+        logger.info("Running AI SRE reasoning on investigation evidence...")
+        diagnosis: Diagnosis = AIAgent.analyze(investigation_result)
+
+        logger.info("Cluster investigation and AI reasoning completed successfully.")
+        return {
+            "investigation": investigation_result,
+            "diagnosis": diagnosis.model_dump(),
+        }

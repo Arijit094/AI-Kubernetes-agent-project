@@ -7,10 +7,11 @@ router = APIRouter(tags=["investigation"])
 
 @router.post("/investigate")
 def investigate_cluster() -> dict[str, any]:
-    """Trigger Kubernetes cluster investigation and return troubleshooting evidence."""
+    """Trigger Kubernetes cluster investigation and AI diagnosis."""
     logger.info("Received POST /investigate request")
-    investigation_data = InvestigationService.investigate()
+    result = InvestigationService.investigate()
     return {
         "status": "success",
-        "investigation": investigation_data,
+        "investigation": result["investigation"],
+        "diagnosis": result["diagnosis"],
     }
