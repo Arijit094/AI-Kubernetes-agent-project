@@ -1,0 +1,24 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+
+# Virtual environments
+.venv/
+venv/
+
+# Environment files
+.env
+.env.local
+
+# Node / Next.js
+node_modules/
+.next/
+frontend/out/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
